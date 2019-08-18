@@ -22,7 +22,6 @@ export class FormComponent {
   @Input() email: string;
   @Input() dOb: string;
   @Input() password: string;
-  @Input() confirmPassword: string;
 
   // Custom error messages
   errorMsg: object = {
@@ -34,11 +33,6 @@ export class FormComponent {
     const now:Date = new Date()
     const months:Array<string> = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
     return `${now.getFullYear()}-${months[now.getMonth()]}-${now.getDate()}`
-  }
-
-  // Check passwords match
-  get matchingPasswords() {
-    return this.password === this.confirmPassword
   }
 
   onSubmit(loginForm: NgForm) {

@@ -1,1 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
+$darkGrey: rgb(72,72,72);
+$lightGrey: rgb(197, 197, 197);
+$themeColor: rgb(63, 168, 153);
+
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
+* {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+body {
+    margin: 0;
+    padding:0;
+    background: $lightGrey;
+}
+.h100 {
+    height: 100%;
+}
+.min-100vh {
+    min-height: 100vh;
+}
+.bg-darkGrey {
+    background-color: $darkGrey;
+}
+.link {
+    cursor: pointer;
+    text-decoration: underline;
+}

@@ -1,0 +1,117 @@
+<form #loginForm="ngForm" (submit)="onSubmit()" class="p-3 p-sm-5" novalidate>
+  <legend class="py-3">{{ registration ? 'Register an account' : 'Log in' }}</legend>
+
+  <div *ngIf="registration" class="form-group required">
+    <label for="firstName">First name</label>
+    <input 
+      type="text" 
+      name="firstName" 
+      id="firstName" 
+      class="form-control"
+      
+      [(ngModel)]="firstName"
+      placeholder="Enter first name"
+      minlength="2"
+      required
+      #firstNameField="ngModel" />
+      <div class="error" *ngIf="(loginForm.submitted || firstNameField.touched) && firstNameField.errors" >
+        <small class="text-danger" [hidden]="!firstNameField.errors.required">{{ errorMsg.required }}</small>
+        <small class="text-danger" [hidden]="!firstNameField.errors.minlength">Must be at least 2 characters</small>
+      </div>
+  </div>
+
+  <div *ngIf="registration" class="form-group required">
+    <label for="lastName">Last name</label>
+    <input 
+      type="text" 
+      name="lastName" 
+      id="lastName" 
+      class="form-control" 
+      [(ngModel)]="lastName"
+      placeholder="Enter last name"
+      minlength="2"
+      required 
+      #lastNameField="ngModel" />
+      <div class="error" *ngIf="(loginForm.submitted || lastNameField.touched) && lastNameField.errors" >
+        <small class="text-danger" [hidden]="!lastNameField.errors.required">{{ errorMsg.required }}</small>
+        <small class="text-danger" [hidden]="!lastNameField.errors.minlength">Must be at least 2 characters</small>
+      </div>
+  </div>
+
+  <div class="form-group required">
+    <label for="email">Email</label>
+    <input 
+      type="text" 
+      name="email" 
+      id="email" 
+      class="form-control"
+      [ngClass]="{'alert-danger': (loginForm.submitted || emailField.touched) && emailField.errors}"
+      [(ngModel)]="email"
+      placeholder="Enter email address"
+      email=true
+      required
+      #emailField="ngModel" />
+      <div class="error" *ngIf="(loginForm.submitted || emailField.touched) && emailField.errors" >
+        <small class="text-danger" [hidden]="!emailField.errors.required">{{ errorMsg.required }}</small>
+        <small class="text-danger" [hidden]="!emailField.errors.email">{{ errorMsg.email }}</small>
+      </div>
+  </div>
+
+  <div *ngIf="registration" class="form-group required">
+    <label for="dOb">Date of birth</label>
+    <input
+      type="date" 
+      name="dOb" 
+      id="dOb" 
+      class="form-control" 
+      [(ngModel)]="dOb"
+      min="1900-01-01"
+      [max]="getFormattedDate()"
+      required
+      #dObField="ngModel" />
+      <div class="error" *ngIf="(loginForm.submitted || dObField.touched) && dObField.errors" >
+        <small class="text-danger" [hidden]="!dObField.errors.required">{{ errorMsg.required }}</small>
+      </div>
+  </div>
+
+  <div class="form-group required">
+    <label for="password">Password</label>
+    <input
+      type="password" 
+      name="password" 
+      id="password" 
+      class="form-control" 
+      [placeholder]=" registration ? 'Enter password: minimum 8 characters' : 'Enter password'"
+      [(ngModel)]="password"
+      minlength="8"
+      required 
+      #passwordField="ngModel" />
+      <div class="error" *ngIf="(loginForm.submitted || passwordField.touched) && passwordField.errors" >
+        <small class="text-danger" [hidden]="!passwordField.errors.required">{{ errorMsg.required }}</small>
+        <small class="text-danger" [hidden]="!passwordField.errors.minlength">Must be at least 8 characters</small>
+      </div>
+  </div>
+
+  <div *ngIf="registration" class="form-group required">
+    <label for="confirmPassword">Confirm password</label>
+    <input
+      type="password" 
+      name="password" 
+      id="confirmPassword" 
+      class="form-control"
+      placeholder="Re-enter password"
+      [(ngModel)]="confirmPassword"
+      required
+      #confirmPasswordField />
+      <div class="error" *ngIf="(loginForm.submitted || confirmPasswordField.dirty || confirmPasswordField.touched) && (confirmPasswordField.errors || !matchingPasswords)" >
+          <small class="text-danger" [hidden]="!confirmPasswordField.errors.required">Passwords do not match</small>
+      </div>
+  </div>
+
+  <div class="py-3">
+    <button type="submit" [disabled]="!loginForm.valid"
+      class="btn btn-primary px-5">Submit</button>
+  </div>
+
+  <p *ngIf="!registration">Not registered? <span class="link" (click)="registration = true">Sign up</span></p>
+</form>

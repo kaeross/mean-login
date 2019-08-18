@@ -1,7 +1,7 @@
 'use strict'
 
 const express = require('express')
-const api = require('./src/api')
+const api = require('./api')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 

@@ -3,14 +3,10 @@
 const express = require('express');
 const User = require('../database/models').User;
 const router = express.Router();
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-router.get('/', function (req, res, next) {
-    res.send(`<h1>Welcome</h1>`);
-})
-
-router.post('/login', (req, res, next) => {
+router.post('/api/login', (req, res, next) => {
     const email = req.body.email.toLowerCase()
     const password = req.body.password;
 
@@ -19,7 +15,7 @@ router.post('/login', (req, res, next) => {
         if (err) return next(err)
         if (!user) {
             return res.send({ 
-                registered: false,
+                newUser: true,
                 loggedIn: false
              })
         } else {
@@ -30,12 +26,14 @@ router.post('/login', (req, res, next) => {
                     // If password matches, log user in
                     if (passwordMatch) {
                         return res.send({ 
-                            registered: true,
-                            loggedIn: true,
+                            newUser: false,
+                            passwordMatch: true,
+                            loggedIn: true
                          })
                     } else {
                         return res.send({ 
-                            registered: true,
+                            newUser: false,
+                            passwordMatch: false,
                             loggedIn: false
                          })
                     }
@@ -45,7 +43,7 @@ router.post('/login', (req, res, next) => {
     });
 });
 
-router.post('/register', (req, res, next) => {
+router.post('/api/register', (req, res, next) => {
     const _req = req.body;
     // Check if user exists
     User.findOne().byEmail(_req.email.toLowerCase()).exec(function (err, user) {
@@ -73,7 +71,7 @@ router.post('/register', (req, res, next) => {
 
                     // Store user session
                     return res.send({ 
-                        registered: true,
+                        newUser: true,
                         loggedIn: true
                      })
                 })
@@ -81,7 +79,7 @@ router.post('/register', (req, res, next) => {
 
         } else {
             return res.send({ 
-                registered: true,
+                newUser: false,
                 loggedIn: false
              })
         }

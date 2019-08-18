@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { CommonService } from '../common.service';
 
 @Component({
   selector: 'app-form',
@@ -8,7 +9,12 @@ import { NgForm } from '@angular/forms';
 })
 export class FormComponent {
 
+  constructor(private newService: CommonService) {}
+
   registration:boolean = false // Default form shown is login
+  newUser:boolean = true
+  passwordMatch:boolean = true
+  loggedIn:boolean = false
 
   // Define inputs
   @Input() firstName: string;
@@ -41,7 +47,28 @@ export class FormComponent {
         email: this.email,
         password: this.password
       }
+
+      this.newService.requestLogin(data).subscribe(response => {
+        console.log(response)
+        this.newUser = response.body.newUser;
+        this.passwordMatch = response.body.passwordMatch;
+        this.loggedIn = response.body.loggedIn;
+      })
+      
+    } else {
+      let data = {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          email: this.email.toLowerCase(),
+          dOb: this.dOb,
+          password: this.password
+        }
+
+        this.newService.requestRegister(data).subscribe(response => {
+          console.log(response)
+          this.newUser = response.body.newUser;
+          this.loggedIn = response.body.loggedIn;
+        })
     }
-    debugger;
   }
 }

@@ -4,6 +4,7 @@ const express = require('express')
 const api = require('./api')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 
 const app = express()
 
@@ -11,6 +12,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }))
 app.use(bodyParser.json())
+app.use(cors())
 
 mongoose.connect('mongodb://localhost/meanLogin', {useNewUrlParser: true});
 
@@ -40,7 +42,7 @@ app.use((err, req, res, next) => {
   });
 
 // Set port.
-app.set('port', process.env.PORT || 5000);
+app.set('port', process.env.PORT || 8080);
 
 // Start listening on port.
 const server = app.listen(app.get('port'), () => {

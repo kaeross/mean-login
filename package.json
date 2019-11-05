@@ -24,7 +24,7 @@
     "bootstrap": "^4.3.1",
     "cors": "^2.8.5",
     "express": "4.17.1",
-    "mongoose": "^5.6.9",
+    "mongoose": "^5.7.5",
     "nodemon": "^1.19.1",
     "rxjs": "^6.5.2",
     "rxjs-compat": "^6.5.2",
